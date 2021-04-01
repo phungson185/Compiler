@@ -1,0 +1,35 @@
+PROGRAM  EXARRAY;
+TYPE T = INTEGER;
+VAR  A : ARRAY(. 10 .) OF T;
+     N : INTEGER;
+
+PROCEDURE INPUT;
+VAR I : INTEGER;
+BEGIN
+  N := READI;
+  FOR I := 1 TO N DO
+     A(.I.) := READI;
+END;
+
+PROCEDURE EXECUTE;
+VAR I : INTEGER;
+    MIN : INTEGER;
+    J : INTEGER;
+    CHECK : CHAR;
+BEGIN
+  MIN := A(.1.);
+  CHECK := 'F';
+  FOR I := 1 TO N DO
+    BEGIN
+    If  A(.I.) < MIN THEN MIN := A(.I.);
+    FOR J := I + 1 TO N DO
+        If  A(.I.) = A(.J.) THEN CHECK := 'T';
+    END;
+  CALL WRITEI(MIN);
+  CALL WRITEC(CHECK);
+END;
+
+BEGIN
+    CALL INPUT;
+    CALL EXECUTE;
+END.
