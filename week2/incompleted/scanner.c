@@ -18,9 +18,10 @@ extern int colNo;
 extern int currentChar;
 
 extern CharCode charCodes[];
-int pFloat = 0;
-int nFloat = 0;
+int SoThucDuong = 0;
+int SoThucAm = 0;
 int ln, cn;
+char preChar;
 /***************************************************************/
 
 void skipBlank()
@@ -67,15 +68,15 @@ Token *readNumber(void)
   Token *tk = makeToken(TK_NUMBER, lineNo, colNo);
   int i = 0;
   int flag = 0;
-  if (pFloat)
+  if (SoThucDuong)
   {
     tk->tokenType = TK_FLOAT;
     tk->colNo--;
     tk->string[i++] = '0';
     tk->string[i++] = '.';
-    pFloat = 0;
+    SoThucDuong = 0;
   }
-  if (nFloat)
+  if (SoThucAm)
   {
     tk->tokenType = TK_FLOAT;
     tk->colNo = cn;
@@ -88,7 +89,7 @@ Token *readNumber(void)
     else
       tk->string[i++] = currentChar;
     readChar();
-    nFloat = 0;
+    SoThucAm = 0;
   }
   while (charCodes[currentChar] == CHAR_DIGIT || charCodes[currentChar] == CHAR_PERIOD)
   {
@@ -134,7 +135,7 @@ Token *readString(void){
     Token *token = makeToken(TK_STRING, lineNo, colNo);
     readChar();
     int i = 0;
-  while ((charCodes[currentChar] != CHAR_EXCEPTIONAL))
+  while ((charCodes[currentChar] != CHAR_DOUBLEQUOTE))
   {
     if (currentChar == EOF)
       error(ERR_ENDOFCOMMENT, lineNo, colNo);
@@ -170,20 +171,15 @@ Token *getToken(void)
   case CHAR_MINUS:
     ln = lineNo;
     cn = colNo;
+    preChar = charCodes[currentChar];
+    token = makeToken(SB_MINUS, lineNo, colNo);
     readChar();
-    if (charCodes[currentChar] == CHAR_PERIOD || charCodes[currentChar] == CHAR_DIGIT)
-    {
-      nFloat = 1;
-      token = readNumber();
-    }
-    else
-      token = makeToken(SB_MINUS, lineNo, colNo);
     return token;
   case CHAR_TIMES:
     token = makeToken(SB_TIMES, lineNo, colNo);
     readChar();
     return token;
-  case CHAR_SLASH:
+case CHAR_SLASH:
     token = makeToken(SB_SLASH, lineNo, colNo);
     readChar();
     return token;
@@ -223,9 +219,14 @@ Token *getToken(void)
     ln = lineNo;
     cn = colNo;
     readChar();
-    if (charCodes[currentChar] == CHAR_DIGIT)
+    if (charCodes[currentChar] == CHAR_DIGIT && preChar == CHAR_MINUS)
     {
-      pFloat = 1;
+      SoThucDuong = 1;
+      token = readNumber();
+    }
+    else if (charCodes[currentChar] == CHAR_PERIOD && preChar == CHAR_MINUS)
+    {
+      SoThucAm = 1;
       token = readNumber();
     }
     else
@@ -263,7 +264,7 @@ Token *getToken(void)
     token = makeToken(SB_RPAR, lineNo, colNo);
     readChar();
     return token;
-  case CHAR_EXCEPTIONAL:
+  case CHAR_DOUBLEQUOTE:
     token = readString();
     return token;
   default:

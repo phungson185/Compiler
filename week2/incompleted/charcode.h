@@ -27,7 +27,7 @@ typedef enum {
   CHAR_LPAR,
   CHAR_RPAR,
   CHAR_UNKNOWN,
-  CHAR_EXCEPTIONAL
+  CHAR_DOUBLEQUOTE
 } CharCode;
 
 #endif
