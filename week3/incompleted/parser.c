@@ -208,6 +208,10 @@ void compileUnsignedConstant(void)
   {
     eat(TK_CHAR);
   }
+  else if (lookAhead->tokenType == TK_STRING)
+  {
+    eat(TK_STRING);
+  }
   else
   {
     error(ERR_INVALIDCONSTANT, lookAhead->lineNo, lookAhead->colNo);
@@ -275,6 +279,10 @@ void compileType(void)
     eat(KW_OF);
     compileType();
   }
+  else if (lookAhead->tokenType == KW_STRING)
+  {
+    eat(KW_STRING);
+  }
   else
   {
     error(ERR_INVALIDTYPE, lookAhead->lineNo, lookAhead->colNo);
@@ -290,6 +298,10 @@ void compileBasicType(void)
   else if (lookAhead->tokenType == KW_CHAR)
   {
     eat(KW_CHAR);
+  }
+  else if (lookAhead->tokenType == KW_STRING)
+  {
+    eat(KW_STRING);
   }
   else
   {
@@ -399,6 +411,9 @@ void compileStatement(void)
     compileForSt();
     break;
     // EmptySt needs to check FOLLOW tokens
+  case KW_DO:
+    compileDoSt();
+    break;
   case SB_SEMICOLON:
   case KW_END:
   case KW_ELSE:
@@ -479,6 +494,15 @@ void compileForSt(void)
   eat(KW_DO);
   compileStatement();
   assert("For statement parsed ....");
+}
+
+void compileDoSt(void){
+  assert("Parsing a Do statement ....");
+  eat(KW_DO);
+  compileStatement();
+  eat(KW_WHILE);
+  compileCondition();
+  assert("Do statement parsed ....");
 }
 
 void compileArguments(void)
@@ -630,6 +654,11 @@ void compileTerm2(void)
     compileFactor();
     compileTerm2();
     break;
+  case SB_PERCENT:
+      eat(SB_PERCENT);
+      compileFactor();
+      compileTerm2();
+      break;
   // Follow - same as expression3
   case SB_PLUS:
   case SB_MINUS:
@@ -670,6 +699,9 @@ void compileFactor(void)
   case TK_CHAR:
     compileUnsignedConstant();
     break;
+   case TK_STRING:
+      eat(TK_STRING);
+      break;
   case SB_LPAR:
     eat(SB_LPAR);
     compileExpression();

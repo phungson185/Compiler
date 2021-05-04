@@ -1,0 +1,17 @@
+program weekday;
+var d:integer;
+function wd (i:integer) : char;
+begin
+if i=1 then wd := 'C'
+  else if i = 2 then wd := 'H'
+    else if i = 3 then wd := 'B'
+      else if i = 4 then wd := 'T'
+        else if i = 5 then wd := 'N'
+         else if i = 6 then wd := 'S'
+          else if i = 7 then wd := 'A'
+            else wd := '#'
+end;
+begin 
+ d := readI;
+Call WriteCd wd(d));
+end.

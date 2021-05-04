@@ -37,6 +37,22 @@ BEGIN
      END
 END;
 
+FUNCTION TEST : INTEGER;
+VAR I: INTEGER;
+    J: INTEGER;
+    B: STRING;
+BEGIN
+    I := 13;
+    J := 5;
+    I := I % J;
+    B := "sDSFJ";
+    DO
+      BEGIN
+        I := I + 1;
+      END
+    WHILE I < 10 
+END;
+
 BEGIN
    CH := 'y';
    WHILE CH = 'y' DO
