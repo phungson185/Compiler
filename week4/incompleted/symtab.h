@@ -7,7 +7,7 @@
 #ifndef __SYMTAB_H__
 #define __SYMTAB_H__
 
-#define MAX_IDENT_LEN 15
+#include "token.h"
 
 enum TypeClass {
   TP_INT,
@@ -162,6 +162,7 @@ void initSymTab(void);
 void cleanSymTab(void);
 void enterBlock(Scope* scope);
 void exitBlock(void);
+Object* lookupObject(char *name);
 void declareObject(Object* obj);
 
 #endif
