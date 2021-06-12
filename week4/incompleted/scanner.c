@@ -119,6 +119,23 @@ Token* readConstChar(void) {
   }
 }
 
+Token *readString(void){
+    Token *token = makeToken(TK_STRING, lineNo, colNo);
+    readChar();
+    int i = 0;
+  while ((charCodes[currentChar] != CHAR_DOUBLEQUOTE))
+  {
+    if (currentChar == EOF)
+      error(ERR_ENDOFCOMMENT, lineNo, colNo);
+    token -> string[i++] = currentChar;
+    readChar();
+  }
+  token -> string[i] = '\0';
+  token->colNo++;
+  readChar();
+  return token;
+}
+
 Token* getToken(void) {
   Token *token;
   int ln, cn;
@@ -226,6 +243,9 @@ Token* getToken(void) {
     token = makeToken(SB_RPAR, lineNo, colNo);
     readChar(); 
     return token;
+  case CHAR_DOUBLEQUOTE:            // add DOUBLEQUOTE "
+    token = readString();
+    return token;
   default:
     token = makeToken(TK_NONE, lineNo, colNo);
     error(ERR_INVALID_SYMBOL, lineNo, colNo);
@@ -255,6 +275,7 @@ void printToken(Token *token) {
   case TK_IDENT: printf("TK_IDENT(%s)\n", token->string); break;
   case TK_NUMBER: printf("TK_NUMBER(%s)\n", token->string); break;
   case TK_CHAR: printf("TK_CHAR(\'%s\')\n", token->string); break;
+  case TK_STRING: printf("TK_STRING(\'%s\')\n", token->string); break;              // add TK_STRING
   case TK_EOF: printf("TK_EOF\n"); break;
 
   case KW_PROGRAM: printf("KW_PROGRAM\n"); break;
@@ -264,6 +285,7 @@ void printToken(Token *token) {
   case KW_INTEGER: printf("KW_INTEGER\n"); break;
   case KW_CHAR: printf("KW_CHAR\n"); break;
   case KW_ARRAY: printf("KW_ARRAY\n"); break;
+  case KW_STRING: printf("KW_STRING\n"); break;                                       // add KW_STRING
   case KW_OF: printf("KW_OF\n"); break;
   case KW_FUNCTION: printf("KW_FUNCTION\n"); break;
   case KW_PROCEDURE: printf("KW_PROCEDURE\n"); break;

@@ -319,6 +319,9 @@ Type *compileType(void)
     eat(KW_CHAR);
     type = makeCharType();
     break;
+  case KW_STRING:
+    eat(KW_STRING);
+    type = makeStringType();
   case KW_ARRAY:
     eat(KW_ARRAY);
     eat(SB_LSEL);
@@ -355,6 +358,10 @@ Type *compileBasicType(void)
   case KW_CHAR:
     eat(KW_CHAR);
     type = makeCharType();
+    break;
+  case KW_STRING:
+    eat(KW_STRING);
+    type = makeStringType();
     break;
   default:
     error(ERR_INVALID_BASICTYPE, lookAhead->lineNo, lookAhead->colNo);
@@ -823,6 +830,11 @@ Type *compileFactor(void)
     type = makeCharType();
     return type;
     break;
+  case TK_STRING:
+    eat(TK_STRING);
+    type = makeStringType();
+    return type;
+    break;
   case TK_IDENT:
     eat(TK_IDENT);
     // check if the identifier is declared
@@ -838,6 +850,9 @@ Type *compileFactor(void)
         break;
       case TP_CHAR:
         type = makeCharType();
+        break;
+      case TP_STRING:
+        type = makeStringType();
         break;
       case TP_ARRAY:
         error(ERR_INVALID_CONSTANT, currentToken->lineNo, currentToken->colNo);

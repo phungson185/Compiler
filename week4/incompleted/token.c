@@ -18,6 +18,7 @@ struct {
   {"VAR", KW_VAR},
   {"INTEGER", KW_INTEGER},
   {"CHAR", KW_CHAR},
+  {"STRING", KW_STRING},        // add KW_STRING
   {"ARRAY", KW_ARRAY},
   {"OF", KW_OF},
   {"FUNCTION", KW_FUNCTION},
@@ -63,6 +64,7 @@ char *tokenToString(TokenType tokenType) {
   case TK_NONE: return "None";
   case TK_IDENT: return "an identification";
   case TK_NUMBER: return "a number";
+  case TK_STRING: return "a string";              // add TK_STRING
   case TK_CHAR: return "a constant char";
   case TK_EOF: return "end of file";
 
@@ -73,6 +75,7 @@ char *tokenToString(TokenType tokenType) {
   case KW_INTEGER: return "keyword INTEGER";
   case KW_CHAR: return "keyword CHAR";
   case KW_ARRAY: return "keyword ARRAY";
+  case KW_STRING: return "keyword STRING";        // add KW_STRING
   case KW_OF: return "keyword OF";
   case KW_FUNCTION: return "keyword FUNCTION";
   case KW_PROCEDURE: return "keyword PROCEDURE";

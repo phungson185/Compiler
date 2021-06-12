@@ -12,7 +12,8 @@
 enum TypeClass {
   TP_INT,
   TP_CHAR,
-  TP_ARRAY
+  TP_ARRAY,
+  TP_STRING
 };
 
 enum ObjectKind {
@@ -137,6 +138,7 @@ typedef struct SymTab_ SymTab;
 
 Type* makeIntType(void);
 Type* makeCharType(void);
+Type* makeStringType(void);
 Type* makeArrayType(int arraySize, Type* elementType);
 Type* duplicateType(Type* type);
 int compareType(Type* type1, Type* type2);
