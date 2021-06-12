@@ -322,6 +322,7 @@ Type *compileType(void)
   case KW_STRING:
     eat(KW_STRING);
     type = makeStringType();
+    break;
   case KW_ARRAY:
     eat(KW_ARRAY);
     eat(SB_LSEL);

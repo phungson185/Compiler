@@ -4,9 +4,12 @@ Program Example6;
    Type t1 = array(. 10 .) of integer;
    Var v1 : Integer;
        v2 : Array(. 10 .) of t1;
+     v4 : STRING;
+     
    Function F(p1 : Integer; Var p2 : char) : Integer;
      Begin
        f := c1;
+       v4 := "test STRING"
      End;
 
    procedure p(v1 : integer);
