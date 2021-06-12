@@ -188,7 +188,6 @@ void compileFuncDecl(void)
   enterBlock(funcObj->funcAttrs->scope);
 
   compileParams();
-
   eat(SB_COLON);
   returnType = compileBasicType();
   funcObj->funcAttrs->returnType = returnType;
@@ -324,7 +323,6 @@ Type *compileType(void)
     eat(KW_ARRAY);
     eat(SB_LSEL);
     eat(TK_NUMBER);
-
     arraySize = currentToken->value;
 
     eat(SB_RSEL);
