@@ -245,7 +245,7 @@ ConstantValue *compileUnsignedConstant(void)
     break;
   case TK_DOUBLE:
     eat(TK_DOUBLE);
-    constValue = makeCharConstant(currentToken->string[0]);
+    constValue = makeDoubleConstant(currentToken->value);
     break;
 
   default:
@@ -436,6 +436,7 @@ void compileStatements(void)
     eat(SB_SEMICOLON);
     compileStatement();
   }
+
 }
 
 void compileStatement(void)
@@ -761,6 +762,7 @@ Type *compileExpression3(void)
     // check the FOLLOW set
   case KW_TO:
   case KW_DO:
+  case KW_WHILE:
   case SB_RPAR:
   case SB_COMMA:
   case SB_EQ:
@@ -817,6 +819,7 @@ void compileTerm2(void)
   case SB_MINUS:
   case KW_TO:
   case KW_DO:
+  case KW_WHILE:
   case SB_RPAR:
   case SB_COMMA:
   case SB_EQ:
