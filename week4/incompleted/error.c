@@ -45,7 +45,7 @@ struct ErrorMessage errors[30] = {
   {ERR_DUPLICATE_IDENT, "Duplicate identifier."},
   {ERR_TYPE_INCONSISTENCY, "Type inconsistency"},
   {ERR_PARAMETERS_ARGUMENTS_INCONSISTENCY, "The number of arguments and the number of parameters are inconsistent."},
-  {ERR_ENDOFCOMMENT,"End of comment expected!"}
+  {ERR_ENDOFCOMMENT,"End of comment expected!"},
 };
 
 void error(ErrorCode err, int lineNo, int colNo) {

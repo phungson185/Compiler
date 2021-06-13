@@ -42,6 +42,13 @@ Type *makeStringType(void)
   return type;
 }
 
+Type *makeDoubleType(void)
+{
+  Type *type = (Type *)malloc(sizeof(Type));
+  type->typeClass = TP_DOUBLE;
+  return type;
+}
+
 Type *makeArrayType(int arraySize, Type *elementType)
 {
   Type *type = (Type *)malloc(sizeof(Type));
@@ -88,6 +95,7 @@ void freeType(Type *type)
   case TP_INT:
   case TP_CHAR:
   case TP_STRING:
+  case TP_DOUBLE:
     free(type);
     break;
   case TP_ARRAY:
@@ -104,6 +112,14 @@ ConstantValue *makeIntConstant(int i)
   ConstantValue *value = (ConstantValue *)malloc(sizeof(ConstantValue));
   value->type = TP_INT;
   value->intValue = i;
+  return value;
+}
+
+ConstantValue *makeDoubleConstant(int d)
+{
+  ConstantValue *value = (ConstantValue *)malloc(sizeof(ConstantValue));
+  value->type = TP_DOUBLE;
+  value->doubleValue = d;
   return value;
 }
 

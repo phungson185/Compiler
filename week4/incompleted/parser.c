@@ -243,6 +243,11 @@ ConstantValue *compileUnsignedConstant(void)
     eat(TK_CHAR);
     constValue = makeCharConstant(currentToken->string[0]);
     break;
+  case TK_DOUBLE:
+    eat(TK_DOUBLE);
+    constValue = makeCharConstant(currentToken->string[0]);
+    break;
+
   default:
     error(ERR_INVALID_CONSTANT, lookAhead->lineNo, lookAhead->colNo);
     break;
@@ -319,6 +324,10 @@ Type *compileType(void)
     eat(KW_CHAR);
     type = makeCharType();
     break;
+  case KW_DOUBLE:
+    eat(KW_DOUBLE);
+    type = makeDoubleType();
+    break;
   case KW_STRING:
     eat(KW_STRING);
     type = makeStringType();
@@ -355,6 +364,10 @@ Type *compileBasicType(void)
   case KW_INTEGER:
     eat(KW_INTEGER);
     type = makeIntType();
+    break;
+  case KW_DOUBLE:
+    eat(KW_DOUBLE);
+    type = makeDoubleType();
     break;
   case KW_CHAR:
     eat(KW_CHAR);
@@ -831,6 +844,11 @@ Type *compileFactor(void)
     type = makeCharType();
     return type;
     break;
+  case TK_DOUBLE:
+    eat(TK_DOUBLE);
+    type = makeDoubleType();
+    return type;
+    break;
   case TK_STRING:
     eat(TK_STRING);
     type = makeStringType();
@@ -851,6 +869,9 @@ Type *compileFactor(void)
         break;
       case TP_CHAR:
         type = makeCharType();
+        break;
+      case TP_DOUBLE:
+        type = makeDoubleType();
         break;
       case TP_STRING:
         type = makeStringType();

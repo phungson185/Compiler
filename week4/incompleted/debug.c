@@ -23,6 +23,9 @@ void printType(Type* type) {
   case TP_STRING:
     printf("String");
     break;
+  case TP_DOUBLE:
+    printf("Double");
+    break;
   case TP_ARRAY:
     printf("Arr(%d,",type->arraySize);
     printType(type->elementType);
