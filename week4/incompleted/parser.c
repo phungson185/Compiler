@@ -461,6 +461,9 @@ void compileStatement(void)
     compileForSt();
     break;
     // EmptySt needs to check FOLLOW tokens
+  case KW_DO:
+    compileDoWhileSt();
+    break;
   case SB_SEMICOLON:
   case KW_END:
   case KW_ELSE:
@@ -547,6 +550,14 @@ void compileWhileSt(void)
   compileCondition();
   eat(KW_DO);
   compileStatement();
+}
+
+void compileDoWhileSt(void)
+{
+  eat(KW_DO);
+  compileStatement();
+  eat(KW_WHILE);
+  compileCondition();
 }
 
 void compileForSt(void)

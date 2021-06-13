@@ -25,6 +25,10 @@ Program Example6;
 	      v3 := 'a';
         v1 := f(c3,v3);
         v5 := 5.4234;
+        begin
+        do
+        while v5 < 10
+        end
      end;
 
 Begin
