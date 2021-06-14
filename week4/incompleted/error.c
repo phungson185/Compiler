@@ -8,14 +8,14 @@
 #include <stdlib.h>
 #include "error.h"
 
-#define NUM_OF_ERRORS 29
+#define NUM_OF_ERRORS 32
 
 struct ErrorMessage {
   ErrorCode errorCode;
   char *message;
 };
 
-struct ErrorMessage errors[30] = {
+struct ErrorMessage errors[32] = {
   {ERR_END_OF_COMMENT, "End of comment expected."},
   {ERR_IDENT_TOO_LONG, "Identifier too long."},
   {ERR_INVALID_CONSTANT_CHAR, "Invalid char constant."},
@@ -46,6 +46,8 @@ struct ErrorMessage errors[30] = {
   {ERR_TYPE_INCONSISTENCY, "Type inconsistency"},
   {ERR_PARAMETERS_ARGUMENTS_INCONSISTENCY, "The number of arguments and the number of parameters are inconsistent."},
   {ERR_ENDOFCOMMENT,"End of comment expected!"},
+  {ERR_RIGHT_LESS_VARIABLE, "The right side is less variable than the left side."},
+  {ERR_RIGHT_MORE_VARIABLE, "The right side has more variables than the left side."}
 };
 
 void error(ErrorCode err, int lineNo, int colNo) {

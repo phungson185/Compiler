@@ -436,7 +436,6 @@ void compileStatements(void)
     eat(SB_SEMICOLON);
     compileStatement();
   }
-
 }
 
 void compileStatement(void)
@@ -481,7 +480,17 @@ Type *compileLValue(void)
   // TODO: parse a lvalue (a variable, an array element, a parameter, the current function identifier)
   Object *var;
   Type *varType;
-
+  switch (lookAhead->tokenType)
+  {
+  case TK_CHAR:
+  case TK_DOUBLE:
+  case TK_STRING:
+  case TK_NUMBER:
+    error(ERR_INVALID_VARIABLE, currentToken->lineNo, currentToken->colNo);
+    break;
+  default:
+    break;
+  }
   eat(TK_IDENT);
   // check if the identifier is a function identifier, or a variable identifier, or a parameter
   var = checkDeclaredLValueIdent(currentToken->string);
@@ -502,12 +511,30 @@ Type *compileLValue(void)
 void compileAssignSt(void)
 {
   // TODO: parse the assignment and check type consistency
-  Type *varType;
-  Type *expType;
-  varType = compileLValue();
+  int leftCount = 0;
+  int rightCount = 0;
+  Type **leftType = (Type **)malloc(100 * sizeof(Type *));
+  Type **rightType = (Type **)malloc(100 * sizeof(Type *));
+  while (1)
+  {
+    leftType[leftCount] = compileLValue();
+    leftCount += 1;
+    if (lookAhead->tokenType != SB_COMMA)
+      break;
+    eat(SB_COMMA);
+  }
   eat(SB_ASSIGN);
-  expType = compileExpression();
-  checkTypeEquality(varType, expType);
+  while (1)
+  {
+    rightType[rightCount] = compileExpression();
+    rightCount += 1;
+    if (lookAhead->tokenType != SB_COMMA)
+      break;
+    eat(SB_COMMA);
+  }
+  checkVariableCount(leftCount, rightCount);
+  for (int i = 0; i < leftCount; i++)
+    checkTypeEquality(*(leftType + i), *(rightType + i));
 }
 
 void compileCallSt(void)
