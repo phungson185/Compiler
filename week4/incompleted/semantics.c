@@ -163,7 +163,7 @@ void checkTypeEquality(Type *type1, Type *type2)
 {
   if (type1 == NULL || type2 == NULL)
     error(ERR_TYPE_INCONSISTENCY, currentToken->lineNo, currentToken->colNo);
-  if (type1->typeClass == type2->typeClass)
+  if (type1->typeClass == type2->typeClass || (type1->typeClass==TP_DOUBLE && type2->typeClass==TP_INT))
   {
     if (type1->typeClass == TP_ARRAY)
     {

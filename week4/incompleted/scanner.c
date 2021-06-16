@@ -85,51 +85,6 @@ Token *readIdentKeyword(void)
   return token;
 }
 
-// Token *readNumber(void)
-// {
-//   Token *token = makeToken(TK_NUMBER, lineNo, colNo);
-//   int len_string = 0;
-//   int find_period = 0;
-//   char value[100] = "";
-//   while (currentChar != -1 && charCodes[currentChar] == CHAR_DIGIT)
-//   {
-
-//     token->string[len_string] = (char)currentChar;
-//     len_string++;
-//     readChar();
-//     if (charCodes[currentChar] == CHAR_PERIOD)
-//     {
-//       strcpy(value,token->string);
-//       token->string[len_string] = (char)currentChar;
-//       len_string++;
-//       find_period = 1;
-//       readChar();
-//     }
-//   }                        
-//   if (find_period == 1)
-//   {
-//     if(charCodes[currentChar] == CHAR_RPAR)
-//     {
-//       strcpy(token->string,value);
-//       printToken(token);
-//       readChar();
-//       return makeToken(SB_RSEL, lineNo - 1, colNo - 2);
-//     }
-//     else if(charCodes[currentChar] == CHAR_SEMICOLON)
-//     {
-//        token->tokenType = TK_DOUBLE;
-//        readChar();
-//       return token;
-//     }
-//   }
-//   else
-//   {
-//     token->value = atoi(token->string);
-//     return token;
-//   }
-//   return NULL;
-// }
-
 Token* readNumber(void) {
   int ln, cn;
   Token *token = makeToken(TK_NUMBER, lineNo, colNo);
@@ -244,7 +199,7 @@ Token *getToken(void)
     token = makeToken(SB_PLUS, lineNo, colNo);
     readChar();
     return token;
-  case CHAR_MINUS:
+  case CHAR_MINUS: // -1.5
     token = makeToken(SB_MINUS, lineNo, colNo);
     readChar();
     return token;
@@ -302,36 +257,6 @@ Token *getToken(void)
     readChar();
     return token;
   case CHAR_PERIOD:
-    // token = makeToken(SB_PERIOD, lineNo, colNo);
-    // readChar();
-    // if (currentChar != -1 && charCodes[currentChar] == CHAR_RPAR) 
-    // {
-    //   readChar();
-    //   token->tokenType = SB_RSEL;
-    //   return token;
-    // }
-    // int len_string = 0;
-    // if (currentChar != -1 && charCodes[currentChar] == CHAR_DIGIT)
-    // {
-    //   token->string[len_string] = '0';
-    //   len_string++;
-    //   token->string[len_string] = '.';
-    //   len_string++;
-    //   while (currentChar != -1 && charCodes[currentChar] == CHAR_DIGIT)
-    //   {
-    //     token->string[len_string] = (char)currentChar;
-    //     len_string++;
-    //     readChar();
-    //   }
-    // }
-    // token->string[len_string] = '\0';
-    // if (len_string > 0)
-    // {
-    //   token->tokenType = TK_DOUBLE;
-    //   return token;
-    // }
-    // else
-    //   return token;
     ln = lineNo;
     cn = colNo;
     readChar();

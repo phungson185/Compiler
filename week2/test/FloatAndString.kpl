@@ -3,12 +3,7 @@ VAR I:FLOAT;
     D:STRING;
     H:Array(.52.) OF INTERGER;
 Begin
-I:= 1.5;
-I:= 55;
-I:= .5;
-I:= -.5;
-I:= -1.5;
-I:= 5.;
-I:= 5;
+I:= -1;
+I:= -55;
 D:="hello";
 End. (* Example 1 *)

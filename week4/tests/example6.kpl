@@ -25,10 +25,10 @@ Program Example6;
 	      v3 := 'a';
         v1 := f(c3,v3);
         v5 := 5.4234;
-        v3, v1, v5 := 'a', 1, 1.5;
+        v3, v1, v5 := 'a', -1, -1.5;
         do
           v1 := v1 + 1
-        while v5 < 29.3;
+        while v5 < 29;
       end;
 
 Begin

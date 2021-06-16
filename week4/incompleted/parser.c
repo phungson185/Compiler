@@ -732,12 +732,18 @@ Type *compileExpression(void)
   case SB_PLUS:
     eat(SB_PLUS);
     type = compileExpression2();
-    checkIntType(type);
+     if (type->typeClass == TP_DOUBLE) {	
+      checkDoubleType(type);	
+    }	
+    else checkIntType(type);
     break;
   case SB_MINUS:
     eat(SB_MINUS);
     type = compileExpression2();
-    checkIntType(type);
+     if (type->typeClass == TP_DOUBLE) {	
+      checkDoubleType(type);	
+    }	
+    else checkIntType(type);
     break;
   default:
     type = compileExpression2();
@@ -832,13 +838,17 @@ void compileTerm2(void)
   case SB_TIMES:
     eat(SB_TIMES);
     type = compileFactor();
-    checkIntType(type);
+     if (type->typeClass == TP_DOUBLE)
+      checkDoubleType(type);	
+    else checkIntType(type);
     compileTerm2();
     break;
   case SB_SLASH:
     eat(SB_SLASH);
     type = compileFactor();
-    checkIntType(type);
+     if (type->typeClass == TP_DOUBLE) 
+      checkDoubleType(type);	
+    else checkIntType(type);
     compileTerm2();
     break;
     // check the FOLLOW set
