@@ -8,14 +8,14 @@
 #include <stdlib.h>
 #include "error.h"
 
-#define NUM_OF_ERRORS 32
+#define NUM_OF_ERRORS 34
 
 struct ErrorMessage {
   ErrorCode errorCode;
   char *message;
 };
 
-struct ErrorMessage errors[32] = {
+struct ErrorMessage errors[34] = {
   {ERR_END_OF_COMMENT, "End of comment expected."},
   {ERR_IDENT_TOO_LONG, "Identifier too long."},
   {ERR_INVALID_CONSTANT_CHAR, "Invalid char constant."},
@@ -35,6 +35,8 @@ struct ErrorMessage errors[32] = {
   {ERR_INVALID_FACTOR, "Invalid factor."},
   {ERR_INVALID_LVALUE, "Invalid lvalue in assignment."},
   {ERR_INVALID_ARGUMENTS, "Wrong arguments."},
+  {ERR_INVALID_DOUBLE, "Invalid double"},
+  {ERR_INVALID_STRING, "Invalid string"},
   {ERR_UNDECLARED_IDENT, "Undeclared identifier."},
   {ERR_UNDECLARED_CONSTANT, "Undeclared constant."},
   {ERR_UNDECLARED_INT_CONSTANT, "Undeclared integer constant."},

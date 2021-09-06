@@ -228,8 +228,8 @@ ConstantValue *compileUnsignedConstant(void)
 
   switch (lookAhead->tokenType)
   {
-  case TK_NUMBER:
-    eat(TK_NUMBER);
+  case TK_INTEGER:
+    eat(TK_INTEGER);
     constValue = makeIntConstant(currentToken->value);
     break;
   case TK_IDENT:
@@ -288,8 +288,8 @@ ConstantValue *compileConstant2(void)
 
   switch (lookAhead->tokenType)
   {
-  case TK_NUMBER:
-    eat(TK_NUMBER);
+  case TK_INTEGER:
+    eat(TK_INTEGER);
     constValue = makeIntConstant(currentToken->value);
     break;
   case TK_IDENT:
@@ -335,7 +335,7 @@ Type *compileType(void)
   case KW_ARRAY:
     eat(KW_ARRAY);
     eat(SB_LSEL);
-    eat(TK_NUMBER);
+    eat(TK_INTEGER);
     arraySize = currentToken->value;
 
     eat(SB_RSEL);
@@ -485,7 +485,7 @@ Type *compileLValue(void)
   case TK_CHAR:
   case TK_DOUBLE:
   case TK_STRING:
-  case TK_NUMBER:
+  case TK_INTEGER:
     error(ERR_INVALID_VARIABLE, currentToken->lineNo, currentToken->colNo);
     break;
   default:
@@ -885,8 +885,8 @@ Type *compileFactor(void)
 
   switch (lookAhead->tokenType)
   {
-  case TK_NUMBER:
-    eat(TK_NUMBER);
+  case TK_INTEGER:
+    eat(TK_INTEGER);
     type = makeIntType();
     return type;
     break;
