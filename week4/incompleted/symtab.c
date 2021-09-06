@@ -123,6 +123,14 @@ ConstantValue *makeDoubleConstant(int d)
   return value;
 }
 
+ConstantValue *makeStringConstant(char str[])
+{
+  ConstantValue *value = (ConstantValue *)malloc(sizeof(ConstantValue));
+  value->type = TP_STRING;
+  strcpy(value->stringValue, str);
+  return value;
+}
+
 ConstantValue *makeCharConstant(char ch)
 {
   ConstantValue *value = (ConstantValue *)malloc(sizeof(ConstantValue));

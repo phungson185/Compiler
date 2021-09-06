@@ -8,7 +8,6 @@
 #define __SCANNER_H__
 
 #include "token.h"
-#define MAX_LENGTH 15
 
 Token* getToken(void);
 Token* getValidToken(void);

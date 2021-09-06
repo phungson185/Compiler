@@ -8,6 +8,7 @@
 #define __SYMTAB_H__
 
 #include "token.h"
+#define MAX_LENGTH 15
 
 enum TypeClass {
   TP_INT,
@@ -48,6 +49,7 @@ struct ConstantValue_ {
     int intValue;
     double doubleValue;
     char charValue;
+    char stringValue[MAX_LENGTH];
   };
 };
 
@@ -150,6 +152,7 @@ void freeType(Type* type);
 ConstantValue* makeIntConstant(int i);
 ConstantValue* makeDoubleConstant(int i);
 ConstantValue* makeCharConstant(char ch);
+ConstantValue* makeStringConstant(char str[]);
 ConstantValue* duplicateConstantValue(ConstantValue* v);
 
 Scope* createScope(Object* owner, Scope* outer);

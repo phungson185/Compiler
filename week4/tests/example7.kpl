@@ -1,0 +1,14 @@
+Program Example7;
+
+var
+         v6 : integer;
+         x : integer;
+          a: string;
+          b: string;
+          c: string;
+Begin
+     v6 := x+3**2;
+     a := "sjdfk";
+     b := "sdjfk3123";
+     c := a + b;
+End. 

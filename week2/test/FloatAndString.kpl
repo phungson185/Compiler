@@ -1,9 +1,19 @@
 Program Example1; (* Example 1 *)
-VAR I:FLOAT;
+VAR I:DOUBLE;
     D:STRING;
+    A:Integer;
     H:Array(.52.) OF INTERGER;
 Begin
-I:= -1;
+I:= .1;
+I:= 1.;
+I:= +1.;
+I:= .5;
+I:= -.5;
+I:= -1.;
+I:= -1.5;
+I:= 1.5;
+
 I:= -55;
 D:="hello";
+A:=4**2;
 End. (* Example 1 *)

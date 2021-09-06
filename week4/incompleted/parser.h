@@ -44,15 +44,22 @@ void compileElseSt(void);
 void compileWhileSt(void);
 void compileDoWhileSt(void);
 void compileForSt(void);
+void compileSwitchSt(void);
+void compileCaseSt(void);
+void compileDefaultSt(void);
 void compileArgument(Object* param);
 void compileArguments(ObjectNode* paramList);
 void compileCondition(void);
 Type* compileExpression(void);
 Type* compileExpression2(void);
 Type* compileExpression3(void);
+Type* compileExpression4(void);
+Type* compileExpression5(void);
 Type* compileTerm(void);
 void compileTerm2(void);
+Type* compilePow(void);
 Type* compileFactor(void);
+
 Type* compileIndexes(Type* arrayType);
 
 int compile(char *fileName);

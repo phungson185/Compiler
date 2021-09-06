@@ -8,14 +8,14 @@
 #include <stdlib.h>
 #include "error.h"
 
-#define NUM_OF_ERRORS 34
+#define NUM_OF_ERRORS 35
 
 struct ErrorMessage {
   ErrorCode errorCode;
   char *message;
 };
 
-struct ErrorMessage errors[34] = {
+struct ErrorMessage errors[35] = {
   {ERR_END_OF_COMMENT, "End of comment expected."},
   {ERR_IDENT_TOO_LONG, "Identifier too long."},
   {ERR_INVALID_CONSTANT_CHAR, "Invalid char constant."},
@@ -32,11 +32,12 @@ struct ErrorMessage errors[34] = {
   {ERR_INVALID_COMPARATOR, "A comparator expected."},
   {ERR_INVALID_EXPRESSION, "Invalid expression."},
   {ERR_INVALID_TERM, "Invalid term."},
+  {ERR_INVALID_POW, "Invalid pow."},
   {ERR_INVALID_FACTOR, "Invalid factor."},
   {ERR_INVALID_LVALUE, "Invalid lvalue in assignment."},
   {ERR_INVALID_ARGUMENTS, "Wrong arguments."},
-  {ERR_INVALID_DOUBLE, "Invalid double"},
-  {ERR_INVALID_STRING, "Invalid string"},
+  {ERR_INVALID_DOUBLE, "Invalid double."},
+  {ERR_INVALID_STRING, "Invalid string."},
   {ERR_UNDECLARED_IDENT, "Undeclared identifier."},
   {ERR_UNDECLARED_CONSTANT, "Undeclared constant."},
   {ERR_UNDECLARED_INT_CONSTANT, "Undeclared integer constant."},
@@ -45,7 +46,7 @@ struct ErrorMessage errors[34] = {
   {ERR_UNDECLARED_FUNCTION, "Undeclared function."},
   {ERR_UNDECLARED_PROCEDURE, "Undeclared procedure."},
   {ERR_DUPLICATE_IDENT, "Duplicate identifier."},
-  {ERR_TYPE_INCONSISTENCY, "Type inconsistency"},
+  {ERR_TYPE_INCONSISTENCY, "Type inconsistency."},
   {ERR_PARAMETERS_ARGUMENTS_INCONSISTENCY, "The number of arguments and the number of parameters are inconsistent."},
   {ERR_ENDOFCOMMENT,"End of comment expected!"},
   {ERR_RIGHT_LESS_VARIABLE, "The right side is less variable than the left side."},
