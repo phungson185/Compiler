@@ -1,0 +1,14 @@
+PROGRAM giaithua;
+var input : integer;
+
+Function giaithua(i : integer) : integer;
+begin
+    if i = 1 then giaithua := 1
+    else 
+        giaithua := i * giaithua(i - 1);
+end;
+
+BEGIN
+    input := readi;
+    call WriteI(giaithua(input));
+END.

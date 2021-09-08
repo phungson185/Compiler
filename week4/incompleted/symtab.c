@@ -115,7 +115,7 @@ ConstantValue *makeIntConstant(int i)
   return value;
 }
 
-ConstantValue *makeDoubleConstant(int d)
+ConstantValue *makeDoubleConstant(double d)
 {
   ConstantValue *value = (ConstantValue *)malloc(sizeof(ConstantValue));
   value->type = TP_DOUBLE;
@@ -145,6 +145,10 @@ ConstantValue *duplicateConstantValue(ConstantValue *v)
   value->type = v->type;
   if (v->type == TP_INT)
     value->intValue = v->intValue;
+  else if (v->type == TP_DOUBLE)
+    value->doubleValue = v->doubleValue;
+  else if (v->type == TP_STRING)
+    strcpy(value->stringValue,v->stringValue);
   else
     value->charValue = v->charValue;
   return value;
@@ -358,6 +362,12 @@ void initSymTab(void)
   obj = createProcedureObject("WRITEC");
   param = createParameterObject("ch", PARAM_VALUE, obj);
   param->paramAttrs->type = makeCharType();
+  addObject(&(obj->procAttrs->paramList), param);
+  addObject(&(symtab->globalObjectList), obj);
+
+  obj = createProcedureObject("WRITES");
+  param = createParameterObject("str", PARAM_VALUE, obj);
+  param->paramAttrs->type = makeStringType();
   addObject(&(obj->procAttrs->paramList), param);
   addObject(&(symtab->globalObjectList), obj);
 

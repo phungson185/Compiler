@@ -16,6 +16,7 @@ Program Example6;
    procedure p(v1 : integer);
      const c1 = 'a';
            c3 = 10;
+           s1 = "sfdjk";
      type t1 = integer;
           t2 = array(. 10 .) of t1;
      var v2 : t2;
@@ -23,6 +24,7 @@ Program Example6;
          v5 : double;
          v6 : integer;
          x : integer;
+         v7: string;
      begin
 	      v3 := 'a';
         v1 := f(c3,v3);
@@ -33,12 +35,17 @@ Program Example6;
         while v5 < 29;
         v6 := 5 + 3/2 - x;
         v6 := x**2;
+        v7 := "dfds" + "a";
+        v6 := +5;
         switch x - 1
         begin
             case 1 : x := x +1; break;
-            case 2 : x := x - 1; break;
+            case 2 : x := if x > 2 return 1 else return 2; break;
             default : x := x + 1; break;
         end;
+
+        repeat x := x + 1 until x < 10;
+
       end;
        
 

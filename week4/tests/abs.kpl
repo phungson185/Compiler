@@ -1,0 +1,14 @@
+PROGRAM abs;
+var input:integer;
+    output:integer;
+
+procedure absProc(i : integer) ;
+Begin
+    output := if i >= 0 return i else return -i;
+    call WriteI(output);
+end;
+
+BEGIN
+    input := readi;
+    CALL absProc(input);
+END.

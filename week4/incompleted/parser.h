@@ -47,6 +47,7 @@ void compileForSt(void);
 void compileSwitchSt(void);
 void compileCaseSt(void);
 void compileDefaultSt(void);
+void compileRepeatUntilSt(void);
 void compileArgument(Object* param);
 void compileArguments(ObjectNode* paramList);
 void compileCondition(void);

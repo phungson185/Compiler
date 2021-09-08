@@ -1,14 +1,13 @@
 Program Example7;
+var n : double;
+    s : string;
+    x : integer;
+    y : integer;
+Function f(n: double; s : string ) : string ;
+begin
+     if n < 0 then f:= " " else f := f(n-1, s) + f(n-1, s);
+end;
 
-var
-         v6 : integer;
-         x : integer;
-          a: string;
-          b: string;
-          c: string;
 Begin
-     v6 := x+3**2;
-     a := "sjdfk";
-     b := "sdjfk3123";
-     c := a + b;
-End. 
+     call writeS(F(10.5, "hello"));
+end.

@@ -150,7 +150,7 @@ int compareType(Type* type1, Type* type2);
 void freeType(Type* type);
 
 ConstantValue* makeIntConstant(int i);
-ConstantValue* makeDoubleConstant(int i);
+ConstantValue* makeDoubleConstant(double i);
 ConstantValue* makeCharConstant(char ch);
 ConstantValue* makeStringConstant(char str[]);
 ConstantValue* duplicateConstantValue(ConstantValue* v);

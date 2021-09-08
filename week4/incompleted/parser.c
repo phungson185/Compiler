@@ -230,7 +230,7 @@ ConstantValue *compileUnsignedConstant(void)
   {
   case TK_INTEGER:
     eat(TK_INTEGER);
-    constValue = makeIntConstant(currentToken->value);
+    constValue = makeIntConstant(currentToken->intValue);
     break;
   case TK_IDENT:
     eat(TK_IDENT);
@@ -245,9 +245,9 @@ ConstantValue *compileUnsignedConstant(void)
     break;
   case TK_DOUBLE:
     eat(TK_DOUBLE);
-    constValue = makeDoubleConstant(currentToken->value);
+    constValue = makeDoubleConstant(currentToken->doubleValue);
     break;
-  
+
   case TK_STRING:
     eat(TK_STRING);
     constValue = makeStringConstant(currentToken->string);
@@ -294,15 +294,21 @@ ConstantValue *compileConstant2(void)
   {
   case TK_INTEGER:
     eat(TK_INTEGER);
-    constValue = makeIntConstant(currentToken->value);
+    constValue = makeIntConstant(currentToken->intValue);
+    break;
+  case TK_STRING:
+    eat(TK_STRING);
+    constValue = makeStringConstant(currentToken->string);
+    break;
+  case TK_DOUBLE:
+    eat(TK_DOUBLE);
+    constValue = makeDoubleConstant(currentToken->doubleValue);
     break;
   case TK_IDENT:
     eat(TK_IDENT);
     obj = checkDeclaredConstant(currentToken->string);
-    if (obj->constAttrs->value->type == TP_INT)
+    if (obj->constAttrs->value->type != TP_ARRAY)
       constValue = duplicateConstantValue(obj->constAttrs->value);
-    else
-      error(ERR_UNDECLARED_INT_CONSTANT, currentToken->lineNo, currentToken->colNo);
     break;
   default:
     error(ERR_INVALID_CONSTANT, lookAhead->lineNo, lookAhead->colNo);
@@ -340,7 +346,7 @@ Type *compileType(void)
     eat(KW_ARRAY);
     eat(SB_LSEL);
     eat(TK_INTEGER);
-    arraySize = currentToken->value;
+    arraySize = currentToken->intValue;
 
     eat(SB_RSEL);
     eat(KW_OF);
@@ -479,6 +485,9 @@ void compileStatement(void)
     break;
   case KW_BREAK:
     eat(KW_BREAK);
+    break;
+  case KW_REPEAT:
+    compileRepeatUntilSt();
     break;
   case SB_SEMICOLON:
   case KW_END:
@@ -656,6 +665,13 @@ void compileDefaultSt(void)
   compileStatement();
 }
 
+void compileRepeatUntilSt(void){
+  eat(KW_REPEAT);
+  compileStatement();
+  eat(KW_UNTIL);
+  compileCondition();
+}
+
 void compileArgument(Object *param)
 {
   // TODO: parse an argument, and check type consistency
@@ -770,19 +786,34 @@ void compileCondition(void)
 Type *compileExpression(void)
 {
   Type *type;
-
+  Type *type1, *type2;
   switch (lookAhead->tokenType)
   {
   case SB_PLUS:
     eat(SB_PLUS);
     type = compileExpression2();
+    if (type->typeClass == TP_STRING)
+      error(ERR_INVALID_EXPRESSION, lookAhead->lineNo, lookAhead->colNo);
     break;
   case SB_MINUS:
     eat(SB_MINUS);
     type = compileExpression2();
-    if(type->typeClass == TP_STRING)
-      error(ERR_TYPE_INCONSISTENCY, lookAhead->lineNo, lookAhead->colNo);   
+    if (type->typeClass == TP_STRING)
+      error(ERR_INVALID_EXPRESSION, lookAhead->lineNo, lookAhead->colNo);
     break;
+  case KW_IF:
+    eat(KW_IF);
+    compileCondition();
+    eat(KW_RETURN);
+
+    type1 = compileExpression();
+
+    eat(KW_ELSE);
+    eat(KW_RETURN);
+
+    type2 = compileExpression();
+    checkTypeEquality(type2, type1);
+    return type1;
   default:
     type = compileExpression2();
   }
@@ -823,8 +854,8 @@ Type *compileExpression3(void)
   case SB_MINUS:
     eat(SB_MINUS);
     type1 = compileTerm();
-    if(type1->typeClass == TP_STRING)
-      error(ERR_TYPE_INCONSISTENCY, lookAhead->lineNo, lookAhead->colNo);  
+    if (type1->typeClass == TP_STRING)
+      error(ERR_INVALID_EXPRESSION, lookAhead->lineNo, lookAhead->colNo);
     type2 = compileExpression3();
     if (type2 != NULL)
       checkTypeEquality(type1, type2);
@@ -832,6 +863,8 @@ Type *compileExpression3(void)
     break;
     // check the FOLLOW set
   case KW_BEGIN:
+  case KW_RETURN:
+  case KW_UNTIL:
   case KW_TO:
   case KW_DO:
   case KW_WHILE:
@@ -893,7 +926,9 @@ void compileTerm2(void)
     compileTerm2();
     break;
     // check the FOLLOW set
+  case KW_RETURN:
   case KW_BEGIN:
+  case KW_UNTIL:
   case SB_PLUS:
   case SB_MINUS:
   case KW_TO:
@@ -917,6 +952,17 @@ void compileTerm2(void)
     error(ERR_INVALID_TERM, lookAhead->lineNo, lookAhead->colNo);
   }
 }
+
+// Type* compileSum(void){
+//     Type *type = makeIntType();
+//     eat(KW_SUM);
+//     checkTypeEquality(type,compileExpression());
+//     while (lookAhead->tokenType == SB_COMMA){
+//         eat(SB_COMMA);
+//         checkTypeEquality(type,compileExpression());
+//     }
+//     return type;
+// }
 
 Type *compileFactor(void)
 {
@@ -1014,6 +1060,8 @@ Type *compileFactor(void)
       break;
     }
     break;
+  // case KW_SUM:
+  //   return compileSum();
   default:
     error(ERR_INVALID_FACTOR, lookAhead->lineNo, lookAhead->colNo);
   }

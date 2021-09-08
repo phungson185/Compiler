@@ -14,6 +14,7 @@
 #include "token.h"
 #include "error.h"
 #include "scanner.h"
+#include "symtab.h"
 
 extern int lineNo;
 extern int colNo;
@@ -85,46 +86,6 @@ Token *readIdentKeyword(void)
   return token;
 }
 
-/*
-Token* readNumber(void) {
-  int ln, cn;
-  Token *token = makeToken(TK_NUMBER, lineNo, colNo);
-  int count = 0;
-
-  while ((currentChar != EOF) && (charCodes[currentChar] == CHAR_DIGIT)) {
-    token->string[count++] = (char)currentChar;
-    readChar();
-  }
-
-  token->string[count] = '\0';
-  token->value = atoi(token->string);
-  if (charCodes[currentChar] != CHAR_PERIOD)
-    return token;
-
-  ln = lineNo;
-  cn = colNo;
-  readChar();
-  if (charCodes[currentChar] != CHAR_DIGIT) {
-    currentChar = '.';
-    lineNo = ln;
-    colNo = cn;
-    return token;
-  }
-
-  token->string[count++] = '.';
-  while ((currentChar != EOF) && (charCodes[currentChar] == CHAR_DIGIT)) {
-    token->string[count++] = (char) currentChar;
-    readChar();
-  }
-  token->string[count] = '\0';
-  token->tokenType = TK_DOUBLE;
-  token->value = atof(token->string);
-
-  return token;
-}
-*/
-
-/*****/
 int flag = 0;
 Token *readNumber(void)
 {
@@ -189,7 +150,7 @@ Token *readNumber(void)
   if (dot == 0)
   {
     token->tokenType = TK_INTEGER;
-    token->value = atoi(token->string);
+    token->intValue = atoi(token->string);
   }
   else if (dot > 1)
   {
@@ -199,11 +160,10 @@ Token *readNumber(void)
   }
   else
   {
-    token->value = atof(token->string);
+    token->doubleValue = atof(token->string);
   }
   return token;
 }
-/******/
 
 Token *readConstChar(void)
 {
@@ -241,7 +201,7 @@ Token *readConstChar(void)
   }
 }
 
-/******/
+
 Token *readString(void)
 {
   Token *token;
@@ -274,7 +234,6 @@ Token *readString(void)
     return token;
   }
 }
-/******/
 
 Token *getToken(void)
 {
@@ -361,7 +320,6 @@ Token *getToken(void)
     readChar();
     return token;
 
-    /***/
   case CHAR_PERIOD:
     token = makeToken(SB_PERIOD, lineNo, colNo);
     readChar();
@@ -396,7 +354,6 @@ Token *getToken(void)
       }
     }
     return token;
-    /***/
 
   case CHAR_COLON:
     ln = lineNo;
@@ -436,7 +393,6 @@ Token *getToken(void)
       return makeToken(SB_LPAR, ln, cn);
     }
 
-    /***/
   case CHAR_RPAR:
     if (flag == 1)
     {
@@ -447,7 +403,6 @@ Token *getToken(void)
       token = makeToken(SB_RPAR, lineNo, colNo);
     readChar();
     return token;
-    /***/
 
   case CHAR_DOUBLEQUOTE:
     token = readString();
@@ -579,6 +534,18 @@ void printToken(Token *token)
     break;
   case KW_BREAK:
     printf("KW_BREAK\n");
+    break;
+  case KW_RETURN:
+    printf("KW_RETURN\n");
+    break;
+  case KW_SUM:
+    printf("KW_SUM\n");
+    break;
+  case KW_REPEAT:
+    printf("KW_REPEAT\n");
+    break;
+  case KW_UNTIL:
+    printf("KW_UNTIL\n");
     break;
 
   case SB_SEMICOLON:
