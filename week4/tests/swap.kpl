@@ -1,6 +1,8 @@
 PROGRAM swap;
 VAR x:INTEGER;
     y:INTEGER;
-    BEGIN
-        x,y := y,x;
-    END.
+    c: char;
+
+BEGIN
+        x,y := c + 1, 2*x -3*y;
+END.

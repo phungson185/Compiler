@@ -51,6 +51,7 @@ void compileRepeatUntilSt(void);
 void compileArgument(Object* param);
 void compileArguments(ObjectNode* paramList);
 void compileCondition(void);
+Type* compileSum(void);
 Type* compileExpression(void);
 Type* compileExpression2(void);
 Type* compileExpression3(void);

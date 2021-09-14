@@ -23,6 +23,7 @@ extern int currentChar;
 extern CharCode charCodes[];
 
 /***************************************************************/
+int checkRSEL = 0;
 
 void skipBlank()
 {
@@ -86,11 +87,10 @@ Token *readIdentKeyword(void)
   return token;
 }
 
-int flag = 0;
 Token *readNumber(void)
 {
   Token *token;
-  int i = 0, dot = 0;
+  int i = 0, dotCount = 0;
 
   token = makeToken(TK_DOUBLE, lineNo, colNo);
   do
@@ -106,7 +106,7 @@ Token *readNumber(void)
       readChar();
       if (charCodes[currentChar] == CHAR_DIGIT)
       {
-        dot++;
+        dotCount++;
         token->string[i] = '.';
         i++;
 
@@ -115,18 +115,18 @@ Token *readNumber(void)
         readChar();
       }
       else if (charCodes[currentChar] == CHAR_RPAR)
-        flag = 1;
+        checkRSEL = 1;
       else if (charCodes[currentChar] == CHAR_PERIOD)
       {
         readChar();
         if (charCodes[currentChar] == CHAR_RPAR)
         {
-          dot++;
+          dotCount++;
           token->string[i] = '.';
           i++;
           token->string[i] = '0';
           i++;
-          flag = 1;
+          checkRSEL = 1;
         }
         else
         {
@@ -137,7 +137,7 @@ Token *readNumber(void)
       }
       else
       {
-        dot++;
+        dotCount++;
         token->string[i] = '.';
         i++;
         token->string[i] = '0';
@@ -147,12 +147,12 @@ Token *readNumber(void)
   } while (charCodes[currentChar] == CHAR_DIGIT || charCodes[currentChar] == CHAR_PERIOD);
   token->string[i] = 0;
 
-  if (dot == 0)
+  if (dotCount == 0)
   {
     token->tokenType = TK_INTEGER;
     token->intValue = atoi(token->string);
   }
-  else if (dot > 1)
+  else if (dotCount > 1)
   {
     token->tokenType = TK_NONE;
     error(ERR_INVALID_DOUBLE, token->lineNo, token->colNo);
@@ -200,7 +200,6 @@ Token *readConstChar(void)
     return token;
   }
 }
-
 
 Token *readString(void)
 {
@@ -345,7 +344,7 @@ Token *getToken(void)
       {
         readChar();
         if (charCodes[currentChar] == CHAR_RPAR)
-          flag = 1;
+          checkRSEL = 1;
         else
         {
           token->tokenType = TK_NONE;
@@ -394,10 +393,10 @@ Token *getToken(void)
     }
 
   case CHAR_RPAR:
-    if (flag == 1)
+    if (checkRSEL == 1)
     {
       token = makeToken(SB_RSEL, lineNo, colNo - 1);
-      flag = 0;
+      checkRSEL = 0;
     }
     else
       token = makeToken(SB_RPAR, lineNo, colNo);

@@ -18,7 +18,7 @@ Program Example6;
            c3 = 10;
            s1 = "sfdjk";
      type t1 = integer;
-          t2 = array(. 10 .) of t1;
+          t2 = array(. 4 .) of t1;
      var v2 : t2;
          v3 : char;
          v5 : double;

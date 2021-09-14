@@ -814,6 +814,9 @@ Type *compileExpression(void)
     type2 = compileExpression();
     checkTypeEquality(type2, type1);
     return type1;
+  case KW_SUM:
+    type= compileSum();
+    break;
   default:
     type = compileExpression2();
   }
@@ -953,16 +956,19 @@ void compileTerm2(void)
   }
 }
 
-// Type* compileSum(void){
-//     Type *type = makeIntType();
-//     eat(KW_SUM);
-//     checkTypeEquality(type,compileExpression());
-//     while (lookAhead->tokenType == SB_COMMA){
-//         eat(SB_COMMA);
-//         checkTypeEquality(type,compileExpression());
-//     }
-//     return type;
-// }
+Type* compileSum(void){
+    eat(KW_SUM);
+    Type* type = compileExpression();
+    if(type == NULL)
+      return makeIntType();
+    checkIntType(type);
+    while (lookAhead->tokenType == SB_COMMA){
+        eat(SB_COMMA);
+        type= compileExpression();
+        checkIntType(type);
+    }
+    return type;
+}
 
 Type *compileFactor(void)
 {
@@ -1056,14 +1062,11 @@ Type *compileFactor(void)
       type = duplicateType(obj->funcAttrs->returnType);
       break;
     default:
-      error(ERR_INVALID_FACTOR, currentToken->lineNo, currentToken->colNo);
-      break;
+      return NULL;
     }
     break;
-  // case KW_SUM:
-  //   return compileSum();
   default:
-    error(ERR_INVALID_FACTOR, lookAhead->lineNo, lookAhead->colNo);
+      return NULL;
   }
 
   return type;

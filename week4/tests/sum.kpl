@@ -1,0 +1,6 @@
+PROGRAM tinhsum;
+VAR x:INTEGER;
+        y : INTEGER;
+BEGIN
+        x := (SUM m,n) ;
+END.
